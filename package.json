@@ -1,0 +1,19 @@
+{
+  "name": "space-webcomponent",
+  "version": "1.0.0",
+  "description": "Native Space Web Component",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack serve --open",
+    "build": "webpack"
+  },
+  "author": "Wouter Lemaire",
+  "license": "ISC",
+  "devDependencies": {
+    "ts-loader": "^9.4.2",
+    "typescript": "^5.0.2",
+    "webpack": "^5.76.3",
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^4.13.1"
+  }
+}
