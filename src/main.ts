@@ -65,6 +65,7 @@ class SpaceComponent extends HTMLElement {
             shadow = this.attachShadow({ mode: 'closed' }),
             element = (document.getElementById('star-wars-intro') as HTMLTemplateElement)?.content.cloneNode(true);
 
+        const numStars = 100;
 
         shadow.append(
             element
@@ -79,9 +80,26 @@ class SpaceComponent extends HTMLElement {
             shadow.dispatchEvent(event);
         });
         shadow.querySelector('slot[name=intro]')!.textContent = this.intro;
+        const mainDiv = shadow.querySelector(".star-wars-intro") as HTMLElement;
+        // For every star we want to display
+        for (let i = 0; i < numStars; i++) {
+            let star = document.createElement("div");
+            star.className = "star";
+            var xy = this.getRandomPosition(mainDiv);
+            star.style.top = xy[0] + 'px';
+            star.style.left = xy[1] + 'px';
+            mainDiv.append(star);
+        }
         // shadow.querySelector('slot[name=title]')!.textContent = this.sectiontitle;
         // shadow.querySelector('slot[name=body]')!.textContent = this.sectionbody;
 
+    }
+    getRandomPosition(element: HTMLElement) {
+        var y = element.offsetWidth;//innerWidth;
+        var x = element.offsetHeight;//innerHeight;
+        var randomX = Math.floor(Math.random() * x);
+        var randomY = Math.floor(Math.random() * y);
+        return [randomX, randomY];
     }
 }
 customElements.define('space-intro', SpaceComponent);
