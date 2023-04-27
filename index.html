@@ -16,14 +16,10 @@
         </style>
         <article class="space-article">
             <h2>
-                <slot name="title">EPISODES IV-VI<br />A Movie Marathon</slot>
+                <slot name="title"></slot>
             </h2>
             <p>
                 <slot name="body">
-                    After years of galactic silence, civilization is on the brink of a new Star Wars release. Now,
-                    with the Force preparing to awaken, the people of Earth seek solace in films of old. With
-                    nowhere to turn, they gather in great numbers and watch the original trilogy without rest. Three
-                    films. 6 hours. 24 minutes. Popcorn. Slushies. Total elation.
                 </slot>
             </p>
         </article>
@@ -32,7 +28,6 @@
 
         <style>
             .star-wars-intro {
-                /* background: url("./img/stars-bg.jpg") center center; */
                 width: 100%;
                 height: 100%;
                 font-family: "Droid Sans", arial, verdana, sans-serif;
@@ -293,17 +288,14 @@
         </style>
         <div class="star-wars-intro">
 
-            <!-- Blue Intro Text -->
             <p class="intro-text">
-                <slot name="intro">A few days ago, during...</slot>
+                <slot name="intro"></slot>
             </p>
 
-            <!-- Logo Image or Text goes in here -->
             <h2 class="main-logo">
                 <img src="./img/star-wars-intro.png">
             </h2>
 
-            <!-- All Scrolling Content Goes in here -->
             <div class="main-content">
                 <div class="title-content">
                     <slot name="article"></slot>
@@ -311,15 +303,13 @@
             </div>
         </div>
     </template>
-    <space-intro id="hw" name="Wouter" intro="hey">
+    <space-intro id="hw" intro="A few days ago, during...">
         <space-article slot="article" sectiontitle="EPISODES IV-VI" sectionbody="After years of galactic silence, civilization is on the brink of a new Star Wars release. Now,
             with the Force preparing to awaken, the people of Earth seek solace in films of old. With
             nowhere to turn, they gather in great numbers and watch the original trilogy without rest. Three
             films. 6 hours. 24 minutes. Popcorn. Slushies. Total elation."></space-article>
-        <space-article slot="article" sectiontitle="second article"
-            sectionbody="blalaqdjlkj qlskdjf jlqsdjfl"></space-article>
-        <!-- <h1 slot="msgtext">Hello Default!</h1>
-        <p>This text will become part of the component.</p> -->
+        <space-article slot="article" sectiontitle="Episode V: The Empire Strikes Back Opener"
+            sectionbody="It is a dark time for the Rebellion. Although the Death Star has been destroyed, Imperial troops have driven the Rebel forces from their hidden base and pursued them across the galaxy.Evading the dreaded Imperial Starfleet, a group of freedom fighters led by Luke Skywalker has established a new secret base on the remote ice world of Hoth.The evil lord Darth Vader, obsessed with finding young Skywalker, has dispatched thousands of remote probes into the far reaches of space"></space-article>
     </space-intro>
     <script>
         document.querySelector('#hw').addEventListener('doSomething', event => {
