@@ -81,26 +81,29 @@ class SpaceComponent extends HTMLElement {
         });
         shadow.querySelector('slot[name=intro]')!.textContent = this.intro;
         const mainDiv = shadow.querySelector(".star-wars-intro") as HTMLElement;
-        // For every star we want to display
-        for (let i = 0; i < numStars; i++) {
-            let star = document.createElement("div");
-            star.className = "star";
-            var xy = this.getRandomPosition(mainDiv);
-            star.style.top = xy[0] + 'px';
-            star.style.left = xy[1] + 'px';
-            mainDiv.append(star);
-        }
-        // shadow.querySelector('slot[name=title]')!.textContent = this.sectiontitle;
-        // shadow.querySelector('slot[name=body]')!.textContent = this.sectionbody;
-
+       
+		// For every star we want to display
+		for (let i = 0; i < numStars; i++) {
+			const { top, left } = this.getRandomPosition(mainDiv);
+			mainDiv.append(this.getRandomStar(top, left));
+		}
     }
-    getRandomPosition(element: HTMLElement) {
-        var y = element.offsetWidth;//innerWidth;
-        var x = element.offsetHeight;//innerHeight;
-        var randomX = Math.floor(Math.random() * x);
-        var randomY = Math.floor(Math.random() * y);
-        return [randomX, randomY];
-    }
+	getRandomStar(top: string, left: string) {
+		const star = document.createElement("div");
+		star.className = "star";
+		star.style.top = top;
+		star.style.left = left;
+		return star;
+	}
+	getRandomPosition(element: HTMLElement) {
+		return {
+			top: `${this.getRandomNumber(element.offsetHeight)}px`,
+			left: `${this.getRandomNumber(element.offsetWidth)}px`,
+		};
+	}
+	getRandomNumber(value: number) {
+		return Math.floor(Math.random() * value);
+	}
 }
 customElements.define('space-intro', SpaceComponent);
 customElements.define('space-article', SpaceArticleComponent);
