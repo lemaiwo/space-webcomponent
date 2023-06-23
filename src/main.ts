@@ -47,14 +47,11 @@ class SpaceArticleComponent extends HTMLElement {
 }
 class SpaceComponent extends HTMLElement {
     private intro: string = '';
-    private sectiontitle: string = '';
-    private sectionbody: string = '';
     constructor() {
         super();
-        // this.name = '';//default value
     }
     static get observedAttributes() {
-        return ['intro', 'sectiontitle', 'sectionbody'];
+        return ['intro'];
     }
     attributeChangedCallback(property: string, oldValue: string, newValue: string) {
         if (oldValue === newValue) return;
@@ -70,7 +67,7 @@ class SpaceComponent extends HTMLElement {
         shadow.append(
             element
         );
-
+            
         shadow.addEventListener('click', e => {
             const event = new CustomEvent('doSomething', {
                 composed: true,
@@ -80,8 +77,8 @@ class SpaceComponent extends HTMLElement {
             shadow.dispatchEvent(event);
         });
         shadow.querySelector('slot[name=intro]')!.textContent = this.intro;
-        const mainDiv = shadow.querySelector(".star-wars-intro") as HTMLElement;
-       
+
+        const mainDiv = shadow.querySelector(".star-wars-intro") as HTMLElement;    
 		// For every star we want to display
 		for (let i = 0; i < numStars; i++) {
 			const { top, left } = this.getRandomPosition(mainDiv);
