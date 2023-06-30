@@ -40,8 +40,8 @@ class SpaceArticleComponent extends HTMLElement {
             });
             shadow.dispatchEvent(event);
         });
-        shadow.querySelector('slot[name=title]')!.textContent = this.sectiontitle;
-        shadow.querySelector('slot[name=body]')!.textContent = this.sectionbody;
+        shadow.querySelector('h2')!.textContent = this.sectiontitle;
+        shadow.querySelector('p')!.textContent = this.sectionbody;
 
     }
 }
@@ -76,7 +76,7 @@ class SpaceComponent extends HTMLElement {
             });
             shadow.dispatchEvent(event);
         });
-        shadow.querySelector('slot[name=intro]')!.textContent = this.intro;
+        shadow.querySelector('.intro-text')!.textContent = this.intro;
 
         const mainDiv = shadow.querySelector(".star-wars-intro") as HTMLElement;    
 		// For every star we want to display
