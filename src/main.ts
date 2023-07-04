@@ -8,28 +8,18 @@ type articleFields = {
 class SpaceArticleComponent extends HTMLElement {
     private sectiontitle: string = '';
     private sectionbody: string = '';
+    private shadow:ShadowRoot;
     constructor() {
         super();
-        // this.name = '';//default value
-    }
-    static get observedAttributes() {
-        return ['sectiontitle', 'sectionbody'];
-    }
-    attributeChangedCallback(property: string, oldValue: string, newValue: string) {
-        if (oldValue === newValue) return;
-        this[property as keyof articleFields] = newValue;
-    }
-    connectedCallback() {
-        const
-            shadow = this.attachShadow({ mode: 'closed' }),
-            element = (document.getElementById('space-article') as HTMLTemplateElement)?.content.cloneNode(true);
+        
+        this.shadow = this.attachShadow({ mode: 'closed' });
 
 
-        shadow.append(
-            element
+        this.shadow.append(
+            (document.getElementById('space-article') as HTMLTemplateElement)?.content.cloneNode(true)
         );
 
-        shadow.addEventListener('click', e => {
+        this.shadow.addEventListener('click', e => {
             const event = new CustomEvent('doSomething', {
                 composed: true,
                 bubbles: true,
@@ -38,17 +28,53 @@ class SpaceArticleComponent extends HTMLElement {
                     sectionbody: this.sectionbody
                 }
             });
-            shadow.dispatchEvent(event);
+            this.shadow.dispatchEvent(event);
         });
-        shadow.querySelector('h2')!.textContent = this.sectiontitle;
-        shadow.querySelector('p')!.textContent = this.sectionbody;
-
+        this.shadow.querySelector('h2')!.textContent = this.sectiontitle;
+        this.shadow.querySelector('p')!.textContent = this.sectionbody;
+    }
+    static get observedAttributes() {
+        return ['sectiontitle', 'sectionbody'];
+    }
+    attributeChangedCallback(property: string, oldValue: string, newValue: string) {
+        if (oldValue === newValue) return;
+        this[property as keyof articleFields] = newValue;
+        
+        this.shadow.querySelector('h2')!.textContent = this.sectiontitle;
+        this.shadow.querySelector('p')!.textContent = this.sectionbody;
     }
 }
 class SpaceComponent extends HTMLElement {
     private intro: string = '';
+    private shadow:ShadowRoot;
     constructor() {
         super();
+        
+        this.shadow = this.attachShadow({ mode: 'closed' });
+
+        const numStars = 100;
+
+        this.shadow.append(
+            (document.getElementById('star-wars-intro') as HTMLTemplateElement)?.content.cloneNode(true)
+        );
+        
+        this.shadow.addEventListener('click', e => {
+            const event = new CustomEvent('doSomething', {
+                composed: true,
+                bubbles: true,
+                detail: { intro: this.intro }
+            });
+            this.shadow.dispatchEvent(event);
+        });
+
+        this.shadow.querySelector('.intro-text')!.textContent = this.intro;
+
+        const mainDiv = this.shadow.querySelector(".star-wars-intro") as HTMLElement;    
+		// For every star we want to display
+		for (let i = 0; i < numStars; i++) {
+			const { top, left } = this.getRandomPosition(mainDiv);
+			mainDiv.append(this.getRandomStar(top, left));
+		}
     }
     static get observedAttributes() {
         return ['intro'];
@@ -56,34 +82,8 @@ class SpaceComponent extends HTMLElement {
     attributeChangedCallback(property: string, oldValue: string, newValue: string) {
         if (oldValue === newValue) return;
         this[property as keyof fields] = newValue;
-    }
-    connectedCallback() {
-        const
-            shadow = this.attachShadow({ mode: 'closed' }),
-            element = (document.getElementById('star-wars-intro') as HTMLTemplateElement)?.content.cloneNode(true);
-
-        const numStars = 100;
-
-        shadow.append(
-            element
-        );
-            
-        shadow.addEventListener('click', e => {
-            const event = new CustomEvent('doSomething', {
-                composed: true,
-                bubbles: true,
-                detail: { intro: this.intro }
-            });
-            shadow.dispatchEvent(event);
-        });
-        shadow.querySelector('.intro-text')!.textContent = this.intro;
-
-        const mainDiv = shadow.querySelector(".star-wars-intro") as HTMLElement;    
-		// For every star we want to display
-		for (let i = 0; i < numStars; i++) {
-			const { top, left } = this.getRandomPosition(mainDiv);
-			mainDiv.append(this.getRandomStar(top, left));
-		}
+        
+        this.shadow.querySelector('.intro-text')!.textContent = this.intro;
     }
 	getRandomStar(top: string, left: string) {
 		const star = document.createElement("div");
